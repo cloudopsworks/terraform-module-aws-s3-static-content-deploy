@@ -20,7 +20,7 @@ module "dir" {
 resource "aws_s3_object" "this" {
   for_each     = module.dir.files
   bucket       = data.aws_s3_bucket.this.bucket
-  key          = try(var.s3.prefix, "") != "" ? format("%s/%s", var.s3.prefix, each.value.source_path) : each.value.source_path
+  key          = try(var.s3.prefix, "") != "" ? format("%s/%s", var.s3.prefix, each.key) : each.key
   source       = each.value.source_path
   etag         = each.value.digests.md5
   content_type = each.value.content_type
